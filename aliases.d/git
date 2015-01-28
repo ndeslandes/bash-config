@@ -1,0 +1,7 @@
+#!/bin/bash
+
+source ~/.bash/functions
+
+register_alias gas 'git add -A && git status'
+register_alias gcentralrebase 'git fetch central && git rebase central/master'
+

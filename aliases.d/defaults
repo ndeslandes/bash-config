@@ -2,13 +2,180 @@
 
 source ~/.bash/functions
 
-case $( uname -s ) in
-Linux) register_alias ls "ls -a --color";;
-Darwin) register_alias ls "ls -aG";;
-esac
+export HOST=$(hostname)
+register_alias projects "cd ~/Projects/"
+register_alias downloads "cd ~/Downloads/"
 
-register_alias rm "rm -i"
+#   ------------------------
+#     MAKE TERMINAL BETTER
+#   ------------------------
 
-register_alias grep "grep --color=auto"
-register_alias egrep "egrep --color=auto"
-register_alias fgrep "fgrep --color=auto"
+register_alias rm "rm -i"                            # Preferred 'rm' implementation
+register_alias grep "grep --color=auto"              # Preferred 'grep' implementation
+register_alias egrep "egrep --color=auto"            # Preferred 'egrep' implementation
+register_alias fgrep "fgrep --color=auto"            # Preferred 'fgrep' implementation
+register_alias cp 'cp -iv'                           # Preferred 'cp' implementation
+register_alias mv 'mv -iv'                           # Preferred 'mv' implementation
+register_alias mkdir 'mkdir -pv'                     # Preferred 'mkdir' implementation
+register_alias ls "ls -AG"                           # Preferred 'ls' implementation
+register_alias ll 'ls -Flhp'                         # ll:           Powerfull ls
+register_alias less 'less -FSRXc'                    # Preferred 'less' implementation
+register_alias cd.. 'cd ../'                         # Go back 1 directory level (for fast typers)
+register_alias .. 'cd ../'                           # Go back 1 directory level
+register_alias ... 'cd ../../'                       # Go back 2 directory levels
+register_alias .3 'cd ../../../'                     # Go back 3 directory levels
+register_alias .4 'cd ../../../../'                  # Go back 4 directory levels
+register_alias .5 'cd ../../../../../'               # Go back 5 directory levels
+register_alias .6 'cd ../../../../../../'            # Go back 6 directory levels
+register_alias edit 'subl'                           # edit:         Opens any file in sublime editor
+register_alias '~' "cd ~"                            # ~:            Go Home
+register_alias c 'clear'                             # c:            Clear terminal display
+register_alias which 'type -all'                     # which:        Find executables
+register_alias path 'echo -e ${PATH//:/\\n}'         # path:         Echo all executable Paths
+register_alias show_options 'shopt'                  # Show_options: display bash options settings
+register_alias fix_stty 'stty sane'                  # fix_stty:     Restore terminal settings when screwed up
+register_alias cic 'set completion-ignore-case On'   # cic:          Make tab-completion case-insensitive
+function mcd() { mkdir -p "$1" && cd "$1"; }         # mcd:          Makes new Dir and jumps inside
+
+#   lr:  Full Recursive Directory Listing
+#   ------------------------------------------
+register_alias lr 'ls -R | grep ":$" | sed -e '\''s/:$//'\'' -e '\''s/[^-][^\/]*\//--/g'\'' -e '\''s/^/   /'\'' -e '\''s/-/|/'\'' | less'
+
+#   mans:   Search manpage given in agument '1' for term given in argument '2' (case insensitive)
+#           displays paginated result with colored search terms and two lines surrounding each hit.             Example: mans mplayer codec
+#   --------------------------------------------------------------------
+function mans() { man $1 | grep -iC2 --color=always $2 | less ;}
+
+#   ------------------------------
+#     FILE AND FOLDER MANAGEMENT
+#   ------------------------------
+
+function zipf() { zip -r "$1".zip "$1" ; }          # zipf:         To create a ZIP archive of a folder
+register_alias numFiles 'echo $(ls -1 | wc -l)'     # numFiles:     Count of non-hidden files in current dir
+
+
+#   extract:  Extract most know archives with one command
+#   ---------------------------------------------------------
+function extract() {
+    if [ -f $1 ] ; then
+    	case $1 in
+	        *.tar.bz2)   tar xjf $1     ;;
+	        *.tar.gz)    tar xzf $1     ;;
+	        *.bz2)       bunzip2 $1     ;;
+	        *.rar)       unrar e $1     ;;
+	        *.gz)        gunzip $1      ;;
+	        *.tar)       tar xf $1      ;;
+	        *.tbz2)      tar xjf $1     ;;
+	        *.tgz)       tar xzf $1     ;;
+	        *.zip)       unzip $1       ;;
+	        *.Z)         uncompress $1  ;;
+	        *.7z)        7z x $1        ;;
+	        *)     		 echo "'$1' cannot be extracted via extract()" ;;
+        esac
+    else
+        echo "'$1' is not a valid file"
+    fi
+}
+
+
+#   -------------
+#     SEARCHING
+#   -------------
+
+register_alias qfind "find . -name "                 # qfind:    Quickly search for file
+function ff() { /usr/bin/find . -name "$@" ; }      # ff:       Find file under the current directory
+function ffs() { /usr/bin/find . -name "$@"'*' ; }  # ffs:      Find file whose name starts with a given string
+function ffe() { /usr/bin/find . -name '*'"$@" ; }  # ffe:      Find file whose name ends with a given string
+
+
+#   ----------------------
+#     PROCESS MANAGEMENT
+#   ----------------------
+
+#   findPid: find out the pid of a specified process
+#   -----------------------------------------------------
+#       Note that the command name can be specified via a regex
+#       E.g. findPid '/d$/' finds pids of all processes with names ending in 'd'
+#       Without the 'sudo' it will only find processes of the current user
+#   -----------------------------------------------------
+function findPid() { lsof -t -c "$@" ; }
+
+#   memHogsTop, memHogsPs:  Find memory hogs
+#   -----------------------------------------------------
+register_alias mem_hogs_top 'top -l 1 -o rsize | head -20'
+register_alias mem_hogs_ps 'ps wwaxm -o pid,stat,vsize,rss,time,command | head -10'
+
+#   cpuHogs:  Find CPU hogs
+#   -----------------------------------------------------
+register_alias cpu_hogs 'ps wwaxr -o pid,stat,%cpu,time,command | head -10'
+
+#   topForever:  Continual 'top' listing (every 10 seconds)
+#   -----------------------------------------------------
+register_alias top_forever 'top -l 9999999 -s 10 -o cpu'
+
+#   ttop:  Recommended 'top' invocation to minimize resources
+#   ------------------------------------------------------------
+#       Taken from this macosxhints article
+#       http://www.macosxhints.com/article.php?story=20060816123853639
+#   ------------------------------------------------------------
+register_alias ttop "top -R -F -s 10 -o rsize"
+
+#   my_ps: List processes owned by my user:
+#   ------------------------------------------------------------
+function my_ps() { ps $@ -u $USER -o pid,%cpu,%mem,start,time,bsdtime,command ; }
+
+
+#   --------------
+#     NETWORKING
+#   --------------
+
+register_alias mywanip 'curl ip.appspot.com'                    # myip:         Public facing IP Address
+register_alias mylanip "ifconfig en0 | awk '/inet /{print substr(\$2,1)}'"
+register_alias netCons 'lsof -i'                             # netCons:      Show all open TCP/IP sockets
+register_alias flushDNS 'dscacheutil -flushcache'            # flushDNS:     Flush out the DNS Cache
+register_alias lsock 'sudo /usr/sbin/lsof -i -P'             # lsock:        Display open sockets
+register_alias lsockU 'sudo /usr/sbin/lsof -nP | grep UDP'   # lsockU:       Display only open UDP sockets
+register_alias lsockT 'sudo /usr/sbin/lsof -nP | grep TCP'   # lsockT:       Display only open TCP sockets
+register_alias ipInfo0 'ipconfig getpacket en0'              # ipInfo0:      Get info on connections for en0
+register_alias ipInfo1 'ipconfig getpacket en1'              # ipInfo1:      Get info on connections for en1
+register_alias openPorts 'sudo lsof -i | grep LISTEN'        # openPorts:    All listening connections
+register_alias showBlocked 'sudo ipfw list'                  # showBlocked:  All ipfw rules inc/ blocked IPs
+
+RED="\033[0;31m"
+NC="\033[0m"
+#   ii:  display useful host related informaton
+#   -------------------------------------------------------------------
+function ii() {
+    printf "\n${RED}You are logged on$NC $HOST"
+    printf "\n${RED}Additionnal information:$NC  " ; uname -a
+    printf "\n${RED}Users logged on:$NC  " ; w -h
+    printf "\n${RED}Current date :$NC  " ; date
+    printf "\n${RED}Machine stats :$NC  " ; uptime
+    #printf "\n${RED}Current network location :$NC  " ; scselect
+    printf "\n${RED}LAN IP Address :$NC  " ;mylanip
+    printf "\n${RED}WAN IP Address :$NC  " ;mywanip
+    #printf "\nDNS Configuration:$NC  " ; scutil --dns
+    echo
+}
+
+
+#   ------------------------------------
+#     SYSTEMS OPERATIONS & INFORMATION
+#   ------------------------------------
+
+register_alias mountReadWrite '/sbin/mount -uw /'    # mountReadWrite:   For use when booted into single-user
+
+#   -------------------
+#     WEB DEVELOPMENT
+#   -------------------
+
+register_alias apacheEdit 'sudo edit /etc/httpd/httpd.conf'      # apacheEdit:       Edit httpd.conf
+register_alias apacheRestart 'sudo apachectl graceful'           # apacheRestart:    Restart Apache
+register_alias editHosts 'sudo edit /etc/hosts'                  # editHosts:        Edit /etc/hosts file
+register_alias herr 'tail /var/log/httpd/error_log'              # herr:             Tails HTTP error logs
+register_alias apacheLogs "less +F /var/log/apache2/error_log"   # Apachelogs:   Shows apache error logs
+function httpHeaders () { /usr/bin/curl -I -L $@ ; }             # httpHeaders:      Grabs headers from web page
+
+#   httpDebug:  Download a web page and show info on what took time
+#   -------------------------------------------------------------------
+function httpDebug () { /usr/bin/curl $@ -o /dev/null -w "dns: %{time_namelookup} connect: %{time_connect} pretransfer: %{time_pretransfer} starttransfer: %{time_starttransfer} total: %{time_total}\n" ; }

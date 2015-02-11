@@ -1,0 +1,7 @@
+#!/bin/bash
+
+source ~/.bash/functions
+
+#register_alias sublime 'open -a "Sublime Text 2"'
+register_alias subl '/Applications/Sublime\ Text\ 2.app/Contents/SharedSupport/bin/subl'
+

@@ -26,9 +26,9 @@ if [[ -n $1 && "$1" =~ ^[0-9]+$ ]]; then
     RGP_MAX_DEPTH=$1
 fi
 
-alias rgp=recursive-git-pull
+register_alias grp 'git-recursive-pull'
 
-function recursive-git-pull {
+function git-recursive-pull {
   if [ `dirs -p | wc -l` -gt $RGP_MAX_DEPTH ]; then
     return
   fi
@@ -40,19 +40,46 @@ function recursive-git-pull {
         echo -e "\x1B[1;31m--\x1B[0m git pull -> \x1B[0;36m$f\x1B[0m [$(git branch | sed -e 's/ //' | sed -e :a -e '$!N; s/\*[ ]*\([^ ]*\)/\\x1B\[1;31m\1\\x1B\[0m/; s/\n/ /; ta')]"
         git pull --rebase
       else
-        recursive-git-pull
+        git-recursive-pull
       fi
       popd > /dev/null
     fi
   done
 }
 
-function git-rebase-upstream {
-  if [ ! $(git remote | grep upstream) ]; then
-    echo -e "No \x1B[1;31mupstream\x1B[0m remote configured for this repo, unable to rebase \x1B[1;31mupstream/master\x1B[0m"
+function git-central-rebase {
+  if [ ! $(git remote | grep central) ]; then
+    echo -e "No \x1B[1;31mcentral\x1B[0m remote configured for this repo, unable to rebase \x1B[1;31mcentral/master\x1B[0m"
   else
-    git checkout master
-    git fetch upstream
-    git merge upstream/master
+    git fetch central
+    git rebase central/master
   fi
+}
+
+function git-central-merge {
+  if [ ! $(git remote | grep central) ]; then
+    echo -e "No \x1B[1;31mcentral\x1B[0m remote configured for this repo, unable to rebase \x1B[1;31mcentral/master\x1B[0m"
+  else
+    git fetch central
+    git merge central/master
+  fi
+}
+
+function git-recursive-central-rebase {
+  if [ `dirs -p | wc -l` -gt $RGP_MAX_DEPTH ]; then
+    return
+  fi
+
+  for f in *; do
+    if [ -d "$f" ]; then
+      pushd "$f" > /dev/null
+      if [ -d .git ]; then
+        echo -e "\x1B[1;31m--\x1B[0m git pull -> \x1B[0;36m$f\x1B[0m [$(git branch | sed -e 's/ //' | sed -e :a -e '$!N; s/\*[ ]*\([^ ]*\)/\\x1B\[1;31m\1\\x1B\[0m/; s/\n/ /; ta')]"
+        git-central-rebase
+      else
+        git-recursive-pull
+      fi
+      popd > /dev/null
+    fi
+  done
 }

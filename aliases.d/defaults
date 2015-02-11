@@ -17,7 +17,10 @@ register_alias fgrep "fgrep --color=auto"            # Preferred 'fgrep' impleme
 register_alias cp 'cp -iv'                           # Preferred 'cp' implementation
 register_alias mv 'mv -iv'                           # Preferred 'mv' implementation
 register_alias mkdir 'mkdir -pv'                     # Preferred 'mkdir' implementation
-register_alias ls "ls -AG"                           # Preferred 'ls' implementation
+case $( uname -s ) in
+Linux) register_alias ls "ls -A --color";;
+Darwin) register_alias ls "ls -AG";;
+esac
 register_alias ll 'ls -Flhp'                         # ll:           Powerfull ls
 register_alias less 'less -FSRXc'                    # Preferred 'less' implementation
 register_alias cd.. 'cd ../'                         # Go back 1 directory level (for fast typers)

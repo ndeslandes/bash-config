@@ -56,15 +56,6 @@ function git-central-rebase {
   fi
 }
 
-function git-central-merge {
-  if [ ! $(git remote | grep central) ]; then
-    echo -e "No \x1B[1;31mcentral\x1B[0m remote configured for this repo, unable to rebase \x1B[1;31mcentral/master\x1B[0m"
-  else
-    git fetch central
-    git merge central/master
-  fi
-}
-
 function git-recursive-central-rebase {
   if [ `dirs -p | wc -l` -gt $RGP_MAX_DEPTH ]; then
     return

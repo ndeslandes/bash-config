@@ -1,0 +1,10 @@
+#!/bin/bash
+
+source ~/.bash/functions
+
+register_alias drm 'docker rm'
+register_alias dps 'docker ps'
+
+function da () {
+    docker start $1 && docker attach $1
+}

@@ -5,5 +5,5 @@ source ~/.bash/functions
 if command -v jenv > /dev/null 2>&1; then 
     export PATH="$HOME/.jenv/bin:$PATH"
     eval "$(jenv init -)"
-    export JAVA_HOME=$(/usr/libexec/java_home -v 1.7.0_67)
+    export JAVA_HOME=$(/usr/libexec/java_home -v 1.8.0.20)
 fi

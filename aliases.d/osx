@@ -44,3 +44,7 @@ register_alias finderHideHidden 'defaults write com.apple.finder ShowAllFiles FA
 register_alias cleanupLS "/System/Library/Frameworks/CoreServices.framework/Frameworks/LaunchServices.framework/Support/lsregister -kill -r -domain local -domain system -domain user && killall Finder"
 
 register_alias screensaver "/System/Library/Frameworks/ScreenSaver.framework/Resources/ScreenSaverEngine.app/Contents/MacOS/ScreenSaverEngine -background &"
+
+if [ -x /usr/local/bin/brew ] && [ -f $(brew --prefix)/bin/gdate ]; then
+    register_alias date "gdate"
+fi

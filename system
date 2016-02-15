@@ -45,4 +45,3 @@ function disable-aliases() {
     fi
   done
 }
-

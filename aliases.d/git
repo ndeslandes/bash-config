@@ -1,9 +1,0 @@
-#!/bin/bash
-
-source ~/.bash/functions
-
-register_alias gs 'git status'
-register_alias ga 'git add -A && git status'
-register_alias gc 'git commit -m' # requires you to type a commit message
-register_alias gp 'git push'
-register_alias grm 'git rm $(git ls-files --deleted)'

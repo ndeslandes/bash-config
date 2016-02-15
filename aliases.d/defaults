@@ -80,7 +80,6 @@ function extract() {
     fi
 }
 
-
 #   -------------
 #     SEARCHING
 #   -------------
@@ -89,7 +88,6 @@ register_alias qfind "find . -name "                 # qfind:    Quickly search 
 function ff() { /usr/bin/find . -name "$@" ; }      # ff:       Find file under the current directory
 function ffs() { /usr/bin/find . -name "$@"'*' ; }  # ffs:      Find file whose name starts with a given string
 function ffe() { /usr/bin/find . -name '*'"$@" ; }  # ffe:      Find file whose name ends with a given string
-
 
 #   ----------------------
 #     PROCESS MANAGEMENT
@@ -160,7 +158,6 @@ function ii() {
     #printf "\nDNS Configuration:$NC  " ; scutil --dns
     echo
 }
-
 
 #   ------------------------------------
 #     SYSTEMS OPERATIONS & INFORMATION

@@ -1,0 +1,5 @@
+#!/bin/bash
+
+source ~/.bash/functions
+
+eval $(docker-machine env default 2>/dev/null)

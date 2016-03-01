@@ -30,7 +30,7 @@ register_alias .3 'cd ../../../'                     # Go back 3 directory level
 register_alias .4 'cd ../../../../'                  # Go back 4 directory levels
 register_alias .5 'cd ../../../../../'               # Go back 5 directory levels
 register_alias .6 'cd ../../../../../../'            # Go back 6 directory levels
-register_alias edit 'subl'                           # edit:         Opens any file in sublime editor
+register_alias edit 'atom'                           # edit:         Opens any file in an editor
 register_alias '~' "cd ~"                            # ~:            Go Home
 register_alias c 'clear'                             # c:            Clear terminal display
 register_alias which 'type -all'                     # which:        Find executables

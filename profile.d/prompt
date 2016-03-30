@@ -6,13 +6,11 @@ source $(script_path $BASH_SOURCE[0])/prompt.d/utils
 source $(script_path $BASH_SOURCE[0])/prompt.d/git-prompt
 
 # Default prompt order, can be redefined
-PROMPT_ORDER=(window_title vcs_pre vcs_prompt PathFull PromptSymbol Space)
+PROMPT_ORDER=(window_title vcs_prompt PathFull PromptSymbol Space)
 
 __set_prompt() {
     local window_title="\[\e]0;${PathFull}\a\]"
 
-    local vcs_pre="$(__git_fetch)"
-    local vcs_pre="${vcs_pre:+"$vcs_pre\\n"}"
     local vcs_prompt="$(__git_prompt)"
 
     unset PS1

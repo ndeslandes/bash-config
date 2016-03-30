@@ -1,0 +1,6 @@
+#!/bin/bash
+
+source ~/.bash/functions
+
+register_alias mvn "/usr/local/bin/mvn -T 1C"
+register_alias mvnFast "/usr/local/bin/mvn -T 1C -Dmaven.test.skip=true"

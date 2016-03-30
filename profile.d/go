@@ -1,0 +1,5 @@
+#!/bin/bash
+
+source ~/.bash/functions
+
+export GOPATH="$HOME/go"

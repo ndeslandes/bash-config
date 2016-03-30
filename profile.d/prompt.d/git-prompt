@@ -1,4 +1,4 @@
-#!/bin/bash 
+#!/bin/bash
 
 source ~/.bash/functions
 
@@ -58,21 +58,4 @@ function __git_prompt {
     remote_status="${remote_status}${Color_Off}"
 
     printf "${BIWhite}∓ (${state}${branch_name}${remote_status}${BIWhite})${Color_Off} "
-}
-
-function __git_fetch {
-    ref=$(git symbolic-ref HEAD 2> /dev/null) || return
-    git_basedir=$(git rev-parse --git-dir)
-    [ ! -f ${git_basedir}/FETCH_HEAD ] && fetch_required=1
-
-    origin_outdated="$(find ${git_basedir}/FETCH_HEAD -mmin +10 2>/dev/null | wc -l | bc)"
-    if [[ "${origin_outdated}" == "1" ]]; then
-        fetch_required=1
-    fi
-
-    if [[ "${fetch_required}" == "1" ]]; then
-        echo "Remote information is outdated. Running git fetch."
-        git fetch --all
-    fi
-
 }

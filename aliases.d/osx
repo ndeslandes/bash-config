@@ -7,6 +7,8 @@ function trash() { command mv "$@" ~/.Trash ; }      # trash:        Moves a fil
 function ql() { qlmanage -p "$*" >& /dev/null; }     # ql:           Opens any file in MacOS Quicklook Preview
 register_alias DT 'tee ~/Desktop/terminalOut.txt'    # DT:           Pipe content to file on MacOS Desktop
 
+register_alias netstat-nap 'lsof -iTCP -sTCP:LISTEN -n -P'
+
 #   cdf:  'Cd's to frontmost window of MacOS Finder
 #   ------------------------------------------------------
 function cdf() {

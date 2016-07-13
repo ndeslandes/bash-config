@@ -22,6 +22,12 @@ Features
    source ~/.bash/system
    ```
 
+   For the gitconfig, edit your ~/.gitconfig and add
+   ```
+   [include]
+    path = ~/.bash/.gitconfig
+   ```
+
    Every executable bash scripts in *~/.bash/aliases.d/* and *~/.bash/profile.d/* will be sourced to be used in your shell.
 
    Also, by default if you want to add custom aliases and profiles without changing the project, it will also look in

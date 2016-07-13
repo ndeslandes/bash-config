@@ -34,6 +34,8 @@
 # }}}
 [alias]
     # basic {{{
+    graph = log --graph --oneline --decorate --all
+    cob = checkout -b
     st = status -s
     cl = clone
     ci = commit

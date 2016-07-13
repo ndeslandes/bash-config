@@ -42,6 +42,7 @@
     r = reset
     cp = cherry-pick
     gr = grep -Ii
+    force = push --force
     # }}}
     # tweak defaults {{{
     diff = diff --word-diff
@@ -129,6 +130,9 @@
 
     # initial empty commit
     empty = "!git commit -am\"[empty] Initial commit\" --allow-empty"
+
+    # rebase upstream master
+    ru = "!f() { git fetch upstream && git rebase upstream/$@; }; f"
 
     # list all aliases
     la = "!git config -l | grep alias | cut -c 7-"

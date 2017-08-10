@@ -33,6 +33,7 @@
 
 # }}}
 [alias]
+    review = "!f(){ git fetch $1 pull/$2/head;git checkout FETCH_HEAD;}; f"
     # basic {{{
     graph = log --graph --oneline --decorate --all
     cob = checkout -b
@@ -138,6 +139,12 @@
 
     # rebase upstream master
     rum = "!f() { git fetch upstream && git rebase upstream/master; }; f"
+
+    # push upstream master
+    pum = push upstream master
+
+    # push upstream master
+    fum = push upstream master --force
 
     # list all aliases
     la = "!git config -l | grep alias | cut -c 7-"

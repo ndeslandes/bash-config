@@ -1,6 +1,0 @@
-#!/bin/bash
-
-source ~/.bash/functions
-
-register_alias docker_rm 'docker rm $(docker ps -a -q)'
-register_alias docker_rmi 'docker rmi $(docker images -q)'

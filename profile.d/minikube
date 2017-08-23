@@ -1,7 +1,0 @@
-#!/bin/bash
-
-source ~/.bash/functions
-
-if [ -x /usr/local/bin/minikube ]; then
-  eval $(minikube docker-env 2>/dev/null)
-fi

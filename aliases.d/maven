@@ -1,5 +1,0 @@
-#!/bin/bash
-
-source ~/.bash/functions
-
-register_alias mvnFast "/usr/local/bin/mvn -U -Dmaven.test.skip=true -DskipTests=true"

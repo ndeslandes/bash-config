@@ -1,6 +1,0 @@
-#!/bin/bash
-
-source ~/.bash/functions
-
-register_alias vpn_batman "sudo openconnect --authgroup=Employee --user=$(whoami) batman.appdirect.com"
-register_alias vpn_iceman "sudo openconnect --authgroup=Employee --user=$(whoami) iceman.appdirect.com"

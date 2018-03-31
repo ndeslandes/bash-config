@@ -12,8 +12,6 @@ alias ll="ls -lah"
 function b64decode() { if [ -z "$1" ]; then while read data; do echo ${data} | base64 --decode; done; else echo ${1} | base64 --decode; fi; }
 function b64encode() { if [ -z "$1" ]; then while read data; do echo -n ${data} | base64; done; else echo -n ${1} | base64; fi;}
 
-[[ $- = *i* ]] && source $(dirname ${BASH_SOURCE[0]})/liquidprompt/liquidprompt
-
 if [ -x /usr/local/bin/brew ] && [ -f $(brew --prefix)/etc/bash_completion ]; then
   . $(brew --prefix)/etc/bash_completion
 fi

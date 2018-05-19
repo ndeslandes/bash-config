@@ -8,28 +8,6 @@
   email = nicolas.deslandes@appdirect.com
   name = Nicolas Deslandes
 
-[color]
-  branch = auto
-  diff = auto
-  status = auto
-
-[color "branch"]
-    current = red reverse
-    local = blue
-    remote = green
-
-[color "diff"]
-    meta = yellow
-    frag = magenta
-    old = red bold
-    new = green
-    plain = white
-
-[color "status"]
-    added = yellow
-    changed = green
-    untracked = cyan
-
 [alias]
     review = "!f(){ git fetch $1 pull/$2/head;git checkout FETCH_HEAD;}; f"
     force = push --force
@@ -43,3 +21,8 @@
     rum = "!f() { git fetch upstream && git rebase upstream/master; }; f"
     pum = push upstream master
     fum = push upstream master --force
+    pr="!f() { \
+        BRANCH_NAME=$(git rev-parse --abbrev-ref HEAD); \
+        git push -u origin $BRANCH_NAME; \
+        hub pull-request; \
+    };f "

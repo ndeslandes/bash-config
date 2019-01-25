@@ -9,20 +9,23 @@
   name = Nicolas Deslandes
 
 [alias]
-    review = "!f(){ git fetch $1 pull/$2/head;git checkout FETCH_HEAD;}; f"
-    force = push --force
-    diff = diff --word-diff
-    branch = branch -ra
-    grep = grep -Ii
-    caa = commit -a --amend -C HEAD
-    ls = log --pretty=format:"%C(green)%h\\ %C(yellow)[%ad]%Cred%d\\ %Creset%s%Cblue\\ [%cn]" --decorate --date=relative
-    ll = log --pretty=format:"%C(yellow)%h%Cred%d\\ %Creset%s%Cblue\\ [%cn]" --decorate --numstat
-    ru = "!f() { git fetch upstream && git rebase upstream/$@; }; f"
-    rum = "!f() { git fetch upstream && git rebase upstream/master; }; f"
-    pum = push upstream master
-    fum = push upstream master --force
-    pr="!f() { \
-        BRANCH_NAME=$(git rev-parse --abbrev-ref HEAD); \
-        git push -u origin $BRANCH_NAME; \
-        hub pull-request; \
-    };f "
+  co = "!f() {\
+          MESSAGE=${@-\"default commit message\"}; \
+          git commit -a -m \"$MESSAGE\"; \
+          git push; \
+        }; f"
+  review = "!f(){ git fetch $1 pull/$2/head;git checkout FETCH_HEAD;}; f"
+  force = push --force
+  diff = diff --word-diff
+  branch = branch -ra
+  grep = grep -Ii
+  caa = commit -a --amend -C HEAD
+  ls = log --pretty=format:"%C(green)%h\\ %C(yellow)[%ad]%Cred%d\\ %Creset%s%Cblue\\ [%cn]" --decorate --date=relative
+  ll = log --pretty=format:"%C(yellow)%h%Cred%d\\ %Creset%s%Cblue\\ [%cn]" --decorate --numstat
+  ru = "!f() { git fetch upstream && git rebase upstream/$@; }; f"
+  rum = "!f() { git fetch upstream && git rebase upstream/master; }; f"
+  pr = "!f() { \
+      BRANCH_NAME=$(git rev-parse --abbrev-ref HEAD); \
+      git push -u origin $BRANCH_NAME; \
+      hub pull-request; \
+  };f "

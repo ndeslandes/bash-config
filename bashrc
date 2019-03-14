@@ -4,7 +4,7 @@ alias vpn_iceman='sudo openconnect --authgroup=duo --user=$(whoami) iceman.appdi
 alias docker_rm='docker rm $(docker ps -a -q)'
 alias docker_rmi='docker rmi $(docker images -q)'
 
-alias brewup='brew update; brew upgrade; brew prune; brew cleanup --prune=1; brew doctor; brew cu -a -f -y'
+alias brewup='brew update; brew upgrade; brew cleanup; brew doctor; brew cu -a -y'
 function cleanup() {
   rm -rf ~/Library/Caches/*;
   sudo rm -rf /private/var/tmp/TM*;

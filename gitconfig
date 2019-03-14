@@ -8,16 +8,18 @@
   email = nicolas.deslandes@appdirect.com
   name = Nicolas Deslandes
 
+[pager]
+  branch = false
+
 [alias]
   co = "!f() {\
-          MESSAGE=${@-\"default commit message\"}; \
+          MESSAGE=${@-\"$(curl -s whatthecommit.com/index.txt)\"}; \
           git commit -a -m \"$MESSAGE\"; \
           git push; \
         }; f"
   review = "!f(){ git fetch $1 pull/$2/head;git checkout FETCH_HEAD;}; f"
   force = push --force
   diff = diff --word-diff
-  branch = branch -ra
   grep = grep -Ii
   caa = commit -a --amend -C HEAD
   ls = log --pretty=format:"%C(green)%h\\ %C(yellow)[%ad]%Cred%d\\ %Creset%s%Cblue\\ [%cn]" --decorate --date=relative

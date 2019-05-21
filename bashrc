@@ -14,22 +14,15 @@ function cleanup() {
 alias ll="ls -lh"
 alias myip='curl ip.appspot.com'
 
-function kctx() { kubectl config use-context $@ &> /dev/null; kubectl config get-contexts; }
-
 if [ -f "/usr/local/opt/bash-git-prompt/share/gitprompt.sh" ]; then
-    __GIT_PROMPT_DIR="/usr/local/opt/bash-git-prompt/share"
-    source "/usr/local/opt/bash-git-prompt/share/gitprompt.sh"
-  fi
-if [ -x /usr/local/bin/brew ] && [ -f $(brew --prefix)/etc/bash_completion ]; then
-  . $(brew --prefix)/etc/bash_completion
+  __GIT_PROMPT_DIR="/usr/local/opt/bash-git-prompt/share"
+  source "/usr/local/opt/bash-git-prompt/share/gitprompt.sh"
 fi
+[[ -r "/usr/local/etc/profile.d/bash_completion.sh" ]] && . "/usr/local/etc/profile.d/bash_completion.sh"
 
 export JAVA_HOME="`/usr/libexec/java_home -v 1.8.0_144`"
 export EDITOR=/usr/bin/vim
 export COPYFILE_DISABLE=true
-
-export LC_CTYPE=C 
-export LANG=C
 
 #   Avoid succesive duplicates in the bash command history.
 export HISTCONTROL=ignoredups
